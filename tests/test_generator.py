@@ -1,6 +1,8 @@
 import shutil
 from pathlib import Path
+
 from scaffold_generator.generator import generate_project
+
 
 def test_generate_app_template(tmp_path):
     # Setup test environment
