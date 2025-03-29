@@ -4,6 +4,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+
 def setup_virtualenv(project_path: Path):
     """Creates a virtual enviroment inside the project directory"""
     venv_path = project_path / "venv"
@@ -14,6 +15,7 @@ def setup_virtualenv(project_path: Path):
         print("Virtual environment created.")
     except subprocess.CalledProcessError:
         print("Failed to create virtual environment.")
+
 
 def install_dependencies(project_path: Path):
     """Install dependencies listed in requirements.txt using pip"""
@@ -27,7 +29,9 @@ def install_dependencies(project_path: Path):
     print("\nInstalling dependencies from requirements.txt...")
 
     try:
-        subprocess.run([str(venv_bin), "-m", "pip", "install", "-r", str(req_file)], check=True)
+        subprocess.run(
+            [str(venv_bin), "-m", "pip", "install", "-r", str(req_file)], check=True
+        )
         print("✅ Dependencies installed.")
     except subprocess.CalledProcessError:
         print("Failed to install dependencies.")
@@ -51,7 +55,9 @@ def init_git_repo(project_path: Path):
     try:
         subprocess.run(["git", "init"], cwd=str(project_path), check=True)
         subprocess.run(["git", "add", "."], cwd=str(project_path), check=True)
-        subprocess.run(["git", "commit", "-m", "Initial commit"], cwd=str(project_path), check=True)
+        subprocess.run(
+            ["git", "commit", "-m", "Initial commit"], cwd=str(project_path), check=True
+        )
         print("Git repository initialized and first commit made.")
     except subprocess.CalledProcessError:
         print("Git setup failed. Is Git installed?")
