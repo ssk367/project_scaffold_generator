@@ -15,6 +15,7 @@ class ScaffoldApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Python Project Scaffold Generator")
+        self.create_menu()
         self.root.geometry("800x800")
         # Center the window on display
         self.root.update_idletasks()
@@ -26,6 +27,29 @@ class ScaffoldApp:
         self.root.resizable(False, False)
 
         self.create_widgets()
+    
+    def create_menu(self):
+        menubar = tk.Menu(self.root)
+
+        # File menu
+        file_menu = tk.Menu(menubar, tearoff=0)
+        file_menu.add_command(label="Exit", command=self.root.quit)
+        menubar.add_cascade(label="File", menu=file_menu)
+
+        # Help menu
+        help_menu = tk.Menu(menubar, tearoff=0)
+        help_menu.add_command(label="About", command=self.show_about)
+        menubar.add_cascade(label="Help", menu=help_menu)
+
+        self.root.config(menu=menubar)
+
+    def show_about(self):
+        messagebox.showinfo(
+            "About",
+            "Python Project Scaffold Generator\n\n"
+            "Created with ❤️ using Tkinter\n"
+            "GitHub: git@github.com:ssk367/project_scaffold_generator.git"
+        )
 
     def create_widgets(self):
         # Project name
