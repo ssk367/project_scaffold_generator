@@ -31,8 +31,8 @@ class ScaffoldApp:
         # Project name
         ttk.Label(self.root, text="Project Name:").pack(pady=(10, 0))
         self.name_entry = ttk.Entry(self.root, width=40)
-        self.name_entry.insert(0, "MyApp")
         self.name_entry.pack(pady=5)
+        self.set_placeholder(self.name_entry, "MyApp")
 
         # Template type dropdown
         ttk.Label(self.root, text="Template Type:").pack(pady=(10, 0))
@@ -51,8 +51,8 @@ class ScaffoldApp:
         # Requirements entry
         ttk.Label(self.root, text="Requirements (comma seperated):").pack(pady=(10, 0))
         self.reqs_entry = ttk.Entry(self.root, width=40)
-        self.reqs_entry.insert(0, "none")
         self.reqs_entry.pack(pady=15)
+        self.set_placeholder(self.reqs_entry, "e.g. requests, pandas")
 
         # Optional steps (checkboxes)
         self.venv_var = ttk.BooleanVar(value=True)
@@ -181,6 +181,17 @@ class ScaffoldApp:
             self.status_label.config(text=f"Error: {e}", foreground="red")
             self.append_log(f"Error: {e}")
 
+        name = self.name_entry.get().strip()
+        if name == "MyApp":
+            name = ""
+
+        reqs_raw = self.reqs_entry.get().strip()
+        if reqs_raw.lower() in ["none", "e.g. requests, pandas"]:
+            requirements = []
+        else:
+            requirements = [pkg.strip() for pkg in reqs_raw.split(",") if pkg.strip()]
+
+
     def update_preview(self, *args):
         template_name = self.template_combo.get()
         structure = TEMPLATES.get(template_name, {})
@@ -212,6 +223,27 @@ class ScaffoldApp:
         self.preview_box.delete("1.0", tk.END)
         self.preview_box.insert(tk.END, full_preview)
         self.preview_box.config(state="disabled")
+
+    def set_placeholder(self, entry, placeholder: str):
+        def show_placeholder():
+            entry.delete(0, tk.END)
+            entry.insert(0, placeholder)
+            entry.config(foreground="gray")
+
+        def on_focus_in(event):
+            if entry.get() == placeholder:
+                entry.delete(0, tk.END)
+                entry.config(foreground="white")
+
+        def on_focus_out(event):
+            if not entry.get().strip():
+                show_placeholder()
+
+        # Initial state
+        show_placeholder()
+        entry.bind("<FocusIn>", on_focus_in)
+        entry.bind("<FocusOut>", on_focus_out)
+
 
 
 if __name__ == "__main__":
