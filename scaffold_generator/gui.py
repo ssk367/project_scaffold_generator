@@ -13,7 +13,7 @@ class ScaffoldApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Python Project Scaffold Generator")
-        self.root.geometry("600x600")
+        self.root.geometry("600x800")
         self.root.resizable(False, False)
 
         self.create_widgets() 
@@ -28,7 +28,7 @@ class ScaffoldApp:
         ttk.Label(self.root, text="Template Type:").pack(pady=(10, 0))
         self.template_combo = ttk.Combobox(self.root, values=list(TEMPLATES.keys()), bootstyle="primary", state="readonly", width=37)
         self.template_combo.pack(pady=5)
-        self.template_combo.set("app") # Default
+        self.template_combo.set("Select Type") # Default
         self.template_combo.bind("<<ComboboxSelected>>", self.update_preview)
         self.name_entry.bind("<KeyRelease>", self.update_preview)
 
@@ -42,15 +42,15 @@ class ScaffoldApp:
         self.install_var = ttk.BooleanVar(value=True)
         self.git_var = ttk.BooleanVar(value=True)
 
-        ttk.Checkbutton(self.root, text="Create virtual enviroment", variable=self.venv_var).pack(pady=5)
-        ttk.Checkbutton(self.root, text="Install dependencies", variable=self.install_var).pack(pady=5)
-        ttk.Checkbutton(self.root, text="Initialize Git repository", variable=self.git_var).pack(pady=5)
+        ttk.Checkbutton(self.root, text="Create virtual enviroment", variable=self.venv_var, command=self.update_preview).pack(pady=5)
+        ttk.Checkbutton(self.root, text="Install dependencies", variable=self.install_var, command=self.update_preview).pack(pady=5)
+        ttk.Checkbutton(self.root, text="Initialize Git repository", variable=self.git_var, command=self.update_preview).pack(pady=5)
 
         # Folder structure preview label
         ttk.Label(self.root, text="Folder Structure Preview:").pack(pady=(10, 0))
 
         # Text box (read-only)
-        self.preview_box = tk.Text(self.root, height=8, width=50, state="disabled", background="#1e1e1e", foreground="white")
+        self.preview_box = tk.Text(self.root, height=15, width=50, state="disabled", background="#1e1e1e", foreground="white")
         self.preview_box.pack(pady=5)
 
         # Generate button
@@ -116,10 +116,16 @@ class ScaffoldApp:
                     lines.append(f"├── {file}")
 
         preview = "\n".join(lines)
+        extras = ["\n Optional Actions:"]
+        extras.append(f"{'✓' if self.venv_var.get() else '✗'} Create virtual environment")
+        extras.append(f"{'✓' if self.install_var.get() else '✗'} Install dependencies")
+        extras.append(f"{'✓' if self.git_var.get() else '✗'} Initialize Git repository")
+
+        full_preview = preview + "\n" + "\n".join(extras)
 
         self.preview_box.config(state="normal")
         self.preview_box.delete("1.0", tk.END)
-        self.preview_box.insert(tk.END, preview)
+        self.preview_box.insert(tk.END, full_preview)
         self.preview_box.config(state="disabled")
 
 if __name__ == "__main__":
