@@ -1,7 +1,7 @@
 # main.py
 
-from generator import generator_project
-from templates import TEMPLATES
+from scaffold_generator.generator import generate_project
+from scaffold_generator.templates import TEMPLATES
 
 
 def main():
@@ -34,7 +34,7 @@ def main():
     requirements = [pkg.strip() for pkg in modules_input.split(",") if pkg.strip()]
 
     print(f"\n→ Generating a '{template_type}' project named '{project_name}'...\n")
-    generator_project(project_name, template_type, requirements)
+    generate_project(project_name, template_type, requirements)
     print("\nProject scaffold created successfully.")
 
 

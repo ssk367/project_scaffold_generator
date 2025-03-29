@@ -5,11 +5,11 @@ import subprocess
 import sys
 from pathlib import Path
 
-from bootstrap import init_git_repo, install_dependencies, setup_virtualenv
-from templates import TEMPLATES
+from scaffold_generator.bootstrap import init_git_repo, install_dependencies, setup_virtualenv
+from scaffold_generator.templates import TEMPLATES
 
 
-def generator_project(project_name: str, template_type: str, requirements: list[str]):
+def generate_project(project_name: str, template_type: str, requirements: list[str], base_path: Path = None):
     """Generates the project structure based on the selected template"""
     if template_type not in TEMPLATES:
         raise ValueError(f"Unknown template type: {template_type}")
@@ -18,7 +18,9 @@ def generator_project(project_name: str, template_type: str, requirements: list[
     structure = TEMPLATES[template_type]
 
     # Define root path for the new project
-    root = Path.cwd() / project_name
+    if base_path is None:
+        base_path = Path.cwd
+    root = base_path / project_name
     print(f"Creating project at: {root}")
 
     # Create each directory and file
