@@ -42,6 +42,7 @@ def test_git_repo_initialized(tmp_path):
         head_file.exists()
     ), "HEAD file does not exist - repo might not initialized properly"
 
+
 def test_requirements_frozen_after_install(tmp_path):
     project_name = "TestDepsApp"
     template_type = "app"
@@ -55,4 +56,3 @@ def test_requirements_frozen_after_install(tmp_path):
     content = req_file.read_text()
     assert "request" in content.lower(), "requests not found in frozen requirements.txt"
     assert "==" in content, "Frozen requirement not version-pinned (missing '==)"
-
