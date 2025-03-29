@@ -33,6 +33,15 @@ class ScaffoldApp:
         self.reqs_entry = ttk.Entry(self.root, width=40)
         self.reqs_entry.pack(pady=15)
 
+        # Optional steps (checkboxes)
+        self.venv_var = tk.BooleanVar(value=True)
+        self.install_var = tk.BooleanVar(value=True)
+        self.git_var = tk.BooleanVar(value=True)
+
+        ttk.Checkbutton(self.root, text="Create virtual enviroment", variable=self.venv_var).pack()
+        ttk.Checkbutton(self.root, text="Install dependencies", variable=self.install_var).pack()
+        ttk.Checkbutton(self.root, text="Initialize Git repository", variable=self.git_var).pack()
+
         # Generate button
         self.generate_btn = ttk.Button(self.root, text="Generate Project", command=self.generate)
         self.generate_btn.pack(pady=5)
@@ -54,7 +63,27 @@ class ScaffoldApp:
 
         try:
             generate_project(name, template, requirements, base_path=project_path)
+            
+            # Optionally run extras
+            from scaffold_generator.bootstrap import (
+                setup_virtualenv,
+                install_dependencies,
+                init_git_repo
+            )
+            
+            project_root = project_path / name
+
+            if self.venv_var.get():
+                setup_virtualenv(project_root)
+            
+            if self.install_var.get():
+                install_dependencies(project_root)
+
+            if self.git_var.get():
+                init_git_repo(project_root)
+
             self.status_label.config(text=f"Project '{name}' created!", foreground="green")
+        
         except Exception as e:
             self.status_label.config(f"Error: {e}", foreground="red") 
 
