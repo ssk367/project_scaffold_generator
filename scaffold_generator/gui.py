@@ -1,7 +1,7 @@
 # gui.py
 
-import tkinter as tk
-from tkinter import ttk
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 from tkinter import messagebox
 from pathlib import Path
 
@@ -34,13 +34,13 @@ class ScaffoldApp:
         self.reqs_entry.pack(pady=15)
 
         # Optional steps (checkboxes)
-        self.venv_var = tk.BooleanVar(value=True)
-        self.install_var = tk.BooleanVar(value=True)
-        self.git_var = tk.BooleanVar(value=True)
+        self.venv_var = ttk.BooleanVar(value=True)
+        self.install_var = ttk.BooleanVar(value=True)
+        self.git_var = ttk.BooleanVar(value=True)
 
-        ttk.Checkbutton(self.root, text="Create virtual enviroment", variable=self.venv_var).pack()
-        ttk.Checkbutton(self.root, text="Install dependencies", variable=self.install_var).pack()
-        ttk.Checkbutton(self.root, text="Initialize Git repository", variable=self.git_var).pack()
+        ttk.Checkbutton(self.root, text="Create virtual enviroment", variable=self.venv_var).pack(pady=(5,0))
+        ttk.Checkbutton(self.root, text="Install dependencies", variable=self.install_var).pack(pady=(5,0))
+        ttk.Checkbutton(self.root, text="Initialize Git repository", variable=self.git_var).pack(pady=(5,0))
 
         # Generate button
         self.generate_btn = ttk.Button(self.root, text="Generate Project", command=self.generate)
@@ -48,7 +48,7 @@ class ScaffoldApp:
 
         # Status label
         self.status_label = ttk.Label(self.root, text="", foreground="green")
-        self.status_label.pack(pady=5)
+        self.status_label.pack(pady=10)
 
     def generate(self):
         name = self.name_entry.get().strip()
@@ -88,6 +88,6 @@ class ScaffoldApp:
             self.status_label.config(f"Error: {e}", foreground="red") 
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = ttk.Window(themename="darkly")
     app = ScaffoldApp(root)
     root.mainloop() 
