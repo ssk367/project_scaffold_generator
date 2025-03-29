@@ -1,23 +1,55 @@
-# Python Project Scaffold Generator
+# 🛠 Python Project Scaffold Generator
 
-A CLI tool to create pre-defined Python project structures, set up virtual environments, install dependencies, and initialize Git repositories.
+A modular Python application for quickly generating standardized project structures, now with a **graphical interface** built using Tkinter!
 
-## Templates
+---
 
-- app
-- game
-- data-analysis
-- (soon: ML models, microservices, etc.)
+## ✨ Features
 
-## Features
+✅ Choose from multiple template types:
 
-- Folder and file scaffolding
-- Virtual environment setup
-- Dependency installation + freeze
-- Git repo initialization
+- `app`: general-purpose applications
+- `game`: structure for game development projects
+- `data-analysis`: structure for data science workflows
 
-## Usage
+✅ Automates project setup:
 
-```bash
-python scaffold_generator/main.py
-```
+- Creates predefined folder and file structures
+- Initializes a virtual environment (`venv/`)
+- Installs specified Python dependencies
+- Freezes exact versions to `requirements.txt`
+- Initializes a Git repository with a first commit
+
+✅ Interfaces:
+
+- **🖥 GUI:** A user-friendly graphical interface
+- **💻 CLI:** Interactive command-line prompts
+
+✅ Fully tested with `pytest`, modular, and extensible
+
+---
+
+## 🖼 GUI Preview
+
+_💡 GUI is built with native `tkinter` widgets. No dependencies required._
+
+![GUI Screenshot Placeholder](#)
+
+> _(Add a screenshot of your GUI once ready)_
+
+---
+
+## 🚀 Getting Started
+
+### 📦 Requirements
+
+- Python 3.10+ (tested on 3.12)
+- Git (for Git repo init)
+
+### 🔧 Installation
+
+1. Clone the repo:
+   ```bash
+   git clone git@github.com:your-username/project_scaffold_generator.git
+   cd project_scaffold_generator
+   ```
